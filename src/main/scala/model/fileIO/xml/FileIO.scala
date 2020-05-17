@@ -44,7 +44,7 @@ class FileIO extends FileIOInterface {
         }
       }
     }
-    Desk(players, bagOfTiles, ssets)
+    Some(Desk(players, bagOfTiles, ssets))
   }
 
   override def save(grid: DeskInterface): Unit =

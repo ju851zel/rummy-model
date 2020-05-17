@@ -2,8 +2,9 @@ package model.fileIO.json
 
 import model.DeskInterface
 import model.deskComp.deskBaseImpl.deskImpl.{Board, Color, Player, Tile}
-import model.deskComp.deskBaseImpl.{BoardInterface, PlayerInterface, TileInterface}
+import model.deskComp.deskBaseImpl.{BoardInterface, Desk, PlayerInterface, TileInterface}
 import model.fileIO.FileIOInterface
+import play.api.libs.json.{JsNumber, JsObject, Json, Writes}
 
 import scala.collection.immutable.SortedSet
 import scala.io.Source
@@ -47,7 +48,7 @@ class FileIO extends FileIOInterface {
       }
       ssets = ssets + sortedSet
     }
-    deskBaseImpl.Desk(players, bagOfTiles, ssets)
+    Some(Desk(players, bagOfTiles, ssets))
   }
 
   override def save(desk: DeskInterface): Unit = {

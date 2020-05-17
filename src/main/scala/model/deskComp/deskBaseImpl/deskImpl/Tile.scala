@@ -25,9 +25,9 @@ object Tile {
   def stringToTile(string: String): Option[TileInterface] =
     Some(
       Tile(
-        parseValue(string).getOrElse(None),
-        parseColor(string).getOrElse(None),
-        parseIdent(string).getOrElse(None)
+        parseValue(string).getOrElse(return None),
+        parseColor(string).getOrElse(return None),
+        parseIdent(string).getOrElse(return None)
       ))
 
   def parseValue(string: String): Option[Int] =

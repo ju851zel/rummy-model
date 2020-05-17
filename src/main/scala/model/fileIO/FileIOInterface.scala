@@ -1,6 +1,7 @@
 package model.fileIO
 
 import model.DeskInterface
+import play.api.libs.json.JsObject
 
 trait FileIOInterface {
   def load: Option[DeskInterface]
