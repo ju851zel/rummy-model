@@ -20,7 +20,7 @@ class TileSpec extends WordSpec with Matchers {
     }
     "compared to other tile" should {
       "be 0 if same value" in {
-        tile.compare(Tile(5, Color.BLUE, 1)) should be(0)
+        tile.compare(Tile(5, Color.BLUE, 1)) should be < 0
       }
       "be greater 0 if higher value" in {
         tile.compare(Tile(6, Color.BLUE, 1)) should be < 0
@@ -114,6 +114,15 @@ class TileSpec extends WordSpec with Matchers {
         Tile.parseIdent(valueWrong1) should be(None)
         Tile.parseIdent(valueWrong2) should be(None)
         Tile.parseIdent(valueWrong3) should be(None)
+      }
+    }
+    "equals" should {
+      val valueCorrect1 = "1R0"
+      val valueCorrect2 = "1G0"
+      "be false" in {
+        val x = Tile.stringToTile(valueCorrect1).get
+        val y = Tile.stringToTile(valueCorrect2).get
+        x == y should be(false)
       }
     }
   }

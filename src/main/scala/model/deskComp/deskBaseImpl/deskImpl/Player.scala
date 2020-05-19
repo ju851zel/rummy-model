@@ -4,7 +4,7 @@ import model.deskComp.deskBaseImpl.{BoardInterface, PlayerInterface, TileInterfa
 
 import scala.collection.immutable.SortedSet
 
-case class Player (name: String, board: BoardInterface, hasTurn: Boolean = false) extends PlayerInterface {
+case class Player (name: String, board: BoardInterface) extends PlayerInterface {
 
   override def won(): Boolean =
     board.isEmpty
@@ -15,9 +15,6 @@ case class Player (name: String, board: BoardInterface, hasTurn: Boolean = false
   override def add(tile: TileInterface): PlayerInterface =
     copy(board = board add tile)
 
-  override def change(turn: Boolean): PlayerInterface =
-    copy(hasTurn = turn)
-
   override def has(tile: TileInterface): Boolean =
     board.contains(tile)
 
@@ -25,5 +22,5 @@ case class Player (name: String, board: BoardInterface, hasTurn: Boolean = false
     board.tiles
 
   override def toString: String =
-    s"Player $name, turn: ${hasTurn}, boardsize: ${board.amountOfTiles()}"
+    s"Player $name, boardsize: ${board.amountOfTiles()}"
 }

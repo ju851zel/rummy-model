@@ -20,12 +20,11 @@ class FileIO extends FileIOInterface {
     for (playerNodes <- file \\ "desk" \\ "players") {
       for (player <- playerNodes \\ "player") {
         val playerName: String    = (player \ "@name").text
-        val playerState: Boolean  = (player \ "@state").text.toBoolean
         var board: BoardInterface = Board(SortedSet[TileInterface]())
         for (tile <- player \\ "board" \\ "tile") {
           board = board add Tile.stringToTile((tile \ "@identifier").text).get
         }
-        players = players :+ Player(playerName, board, playerState)
+        players = players :+ Player(playerName, board)
       }
 
       for (tileNodes <- file \\ "desk" \\ "bagOfTiles") {
@@ -79,8 +78,7 @@ class FileIO extends FileIOInterface {
     </desk>
 
   private def playerToXml(player: PlayerInterface) =
-    <player name={player.name.toString}
-            state={player.hasTurn.toString}>
+    <player name={player.name}>
       {boardToXml(player.tiles)}
     </player>
 

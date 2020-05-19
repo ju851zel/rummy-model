@@ -14,10 +14,7 @@ class PlayerSpec() extends WordSpec with Matchers {
         player.name should be("John")
       }
       "have a nice String representation" in {
-        player.toString should be("Player John, turn: false, boardsize: 1")
-      }
-      "have the turn false" in {
-        player.hasTurn should be(false)
+        player.toString should be("Player John, boardsize: 1")
       }
     }
     "takes a Tile" should {
@@ -32,12 +29,6 @@ class PlayerSpec() extends WordSpec with Matchers {
       val newPlayer = player remove tile
       "have one tile less on board" in {
         newPlayer.has(tile) should be(false)
-      }
-    }
-    "its turn status is changed" should {
-      val newPlayer = player.change(true)
-      "have turn " in {
-        newPlayer.hasTurn should be(true)
       }
     }
   }

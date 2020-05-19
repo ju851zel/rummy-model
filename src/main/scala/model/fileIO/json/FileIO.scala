@@ -18,7 +18,6 @@ class FileIO extends FileIOInterface {
     var bagOfTiles = Set[TileInterface]()
     for (i <- 0 until (json \ "desk" \ "amountOfPlayers").get.toString.toInt) {
       val name                  = ((json \ "desk" \ "players")(i) \ "name").as[String]
-      val state                 = ((json \ "desk" \ "players")(i) \ "hasTurn").as[Boolean]
       var board: BoardInterface = Board(SortedSet[TileInterface]())
       for (j <- 0 until ((json \ "desk" \ "players")(i) \ "tilesOnBoard").as[Int]) {
         val value = (((json \ "desk" \ "players")(i) \ "board")(j) \ "value").as[Int]
@@ -26,7 +25,7 @@ class FileIO extends FileIOInterface {
         val ident = (((json \ "desk" \ "players")(i) \ "board")(j) \ "ident").as[Int]
         board = board add Tile(value, Color.colorFromString(color), ident)
       }
-      players = players :+ Player(name, board, state)
+      players = players :+ Player(name, board)
     }
     for (i <- 0 until (json \ "desk" \ "bagSize").get.toString.toInt) {
       val value = ((json \ "desk" \ "bag")(i) \ "value").as[Int]
@@ -71,7 +70,6 @@ class FileIO extends FileIOInterface {
   implicit val playerWrites: Writes[PlayerInterface] = new Writes[PlayerInterface] {
     def writes(player: PlayerInterface) = Json.obj(
       "name"         -> player.name,
-      "hasTurn"      -> player.hasTurn,
       "tilesOnBoard" -> player.tiles.size,
       "board" -> Json.toJson(
         for {
