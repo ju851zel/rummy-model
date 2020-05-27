@@ -1,18 +1,22 @@
-package model.fileIO.xml
+package model.fileIO
 
 import model.DeskInterface
 import model.deskComp.deskBaseImpl.deskImpl.{Board, Player, Tile}
 import model.deskComp.deskBaseImpl.{BoardInterface, Desk, PlayerInterface, TileInterface}
-import model.fileIO.FileIOInterface
-import play.api.libs.json.JsObject
+import play.api.libs.json.{JsObject, JsValue}
 
 import scala.collection.immutable.SortedSet
 import scala.util.Try
 import scala.xml.PrettyPrinter
 
-class FileIO extends FileIOInterface {
+class FileIOXml  {
 
-  override def load: Option[DeskInterface] = {
+
+   def jsonToDesk(json: JsValue) : Option[Desk] = {
+    None
+  }
+
+   def load: Option[DeskInterface] = {
     val file       = Try(scala.xml.XML.loadFile("/target/desk.xml")).getOrElse(return None);
     var players    = List[PlayerInterface]()
     var bagOfTiles = Set[TileInterface]()
@@ -46,7 +50,7 @@ class FileIO extends FileIOInterface {
     Some(Desk(players, bagOfTiles, ssets))
   }
 
-  override def save(grid: DeskInterface): Unit =
+   def save(grid: DeskInterface): Unit =
     saveString(grid)
 
   private def saveString(desk: DeskInterface): Unit = {
@@ -95,6 +99,6 @@ class FileIO extends FileIOInterface {
   private def tiletoXml(tile: TileInterface) =
     <tile identifier={tile.toString}></tile>
 
-  override def toJson(grid: DeskInterface): JsObject =
+   def toJson(grid: DeskInterface): JsObject =
     throw new NotImplementedError("Not available in this class, use JSON")
 }
